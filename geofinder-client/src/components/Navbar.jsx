@@ -1,9 +1,10 @@
 import react from "react";
 import "./Navbar.css";
+
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">🌍 GeoFinder</div>
+      <div className="logo">🌎GeoFinder</div>
 
       <ul className="nav-links">
         <li>Home</li>
