@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./SearchBar.css";
 
 const SearchBar = ({ setLocation, results, setCoordinates }) => {
   const [input, setInput] = useState("");
@@ -9,8 +10,7 @@ const SearchBar = ({ setLocation, results, setCoordinates }) => {
   };
 
   const handleSelect = (place) => {
-    setInput(place.display_name); // update input box too
-
+    setInput(place.display_name);
     setLocation(place.display_name);
 
     setCoordinates({
@@ -20,34 +20,31 @@ const SearchBar = ({ setLocation, results, setCoordinates }) => {
   };
 
   return (
-    <>
+    <div className="search-container">
+      {/* INPUT */}
       <input
+        className="search-input"
         type="text"
         value={input}
         placeholder="Search location..."
         onChange={(e) => handleChange(e.target.value)}
       />
 
-      {/* 🔽 Suggestions */}
-      <div>
-        {results?.map((place, index) => (
-          <div
-            key={index}
-            onClick={() => handleSelect(place)}
-            style={{
-              cursor: "pointer",
-              padding: "10px",
-              borderBottom: "1px solid #ddd",
-              background: "#fff",
-            }}
-          >
-            <div >
-              📍 {place.display_name}
+      {/* RESULTS */}
+      {results?.length > 0 && (
+        <div className="results-dropdown">
+          {results.map((place, index) => (
+            <div
+              key={index}
+              className="result-item"
+              onClick={() => handleSelect(place)}
+            >
+              <div className="result-title">📍 {place.display_name}</div>
             </div>
-          </div>
-        ))}
-      </div>
-    </>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
