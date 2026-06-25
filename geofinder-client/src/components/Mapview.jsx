@@ -1,10 +1,10 @@
-import react from 'react';
+const Mapview = ({ location }) => {
+  return (
+    <div>
+      <h2>Map View</h2>
+      <p>Searching for: {location}</p>
+    </div>
+  );
+};
 
-const Mapview = () => {
-    return (
-        <>
-        <p> Map is appers here</p>
-        </>
-    )
-}
 export default Mapview;
