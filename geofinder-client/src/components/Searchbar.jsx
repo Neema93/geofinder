@@ -41,7 +41,7 @@ const SearchBar = ({ setLocation, results, setCoordinates }) => {
               background: "#fff",
             }}
           >
-            <div style={{ fontWeight: "bold" }}>
+            <div >
               📍 {place.display_name}
             </div>
           </div>
