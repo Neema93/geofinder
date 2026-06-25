@@ -11,16 +11,12 @@ const Mapview = ({ coordinates }) => {
       zoom={13}
       style={{ height: "500px", width: "100%" }}
     >
-      <TileLayer
-        attribution='&copy; OpenStreetMap contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       <Marker position={[coordinates.lat, coordinates.lng]}>
         <Popup>
-          Latitude: {coordinates.lat}
-          <br />
-          Longitude: {coordinates.lng}
+          Lat: {coordinates.lat} <br />
+          Lng: {coordinates.lng}
         </Popup>
       </Marker>
     </MapContainer>

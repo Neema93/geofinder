@@ -4,25 +4,24 @@ import SearchBar from "../components/SearchBar";
 import Mapview from "../components/Mapview";
 
 const Home = () => {
-  
-const [location, setLocation] = useState("");
-const [coordinates, setCoordinates] = useState(null);
+  const [location, setLocation] = useState("");
+  const [coordinates, setCoordinates] = useState(null);
+  const [results, setResults] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
   if (!location) return;
 
-  fetch(
-    `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.length > 0) {
-        setCoordinates({
-          lat: parseFloat(data[0].lat),
-          lng: parseFloat(data[0].lon),
-        });
-      }
-    });
+  const delay = setTimeout(() => {
+    const cleanQuery = encodeURIComponent(location);
+
+    fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${cleanQuery}&limit=5`
+    )
+      .then((res) => res.json())
+      .then((data) => setResults(data));
+  }, 400); // delay 400ms
+
+  return () => clearTimeout(delay);
 }, [location]);
 
   return (
@@ -30,10 +29,15 @@ useEffect(() => {
       <Navbar />
       <h1>GeoFinder</h1>
 
-      <SearchBar setLocation={setLocation} />
+      <SearchBar
+        setLocation={setLocation}
+        results={results}
+        setCoordinates={setCoordinates}
+      />
 
       <Mapview coordinates={coordinates} />
     </>
   );
 };
+
 export default Home;
