@@ -4,9 +4,9 @@ const SearchBar = ({ setLocation }) => {
   const [input, setInput] = useState("");
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    setLocation(input);
-  };
+  event.preventDefault();
+  setLocation(input);
+};
 
   return (
     <form onSubmit={handleSubmit}>
