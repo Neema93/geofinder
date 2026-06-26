@@ -5,7 +5,11 @@ const Mapview = ({ coordinates }) => {
   if (!coordinates) {
     return (
       <div className="map-placeholder">
-        🗺️ Search for a location to view it on the map
+        <h2>🗺️ Find a Location</h2>
+
+      <p>
+        Search for a city, street, or full address to display it on the map.
+      </p>
       </div>
     );
   }
