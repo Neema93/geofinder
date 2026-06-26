@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Mapview from "../components/Mapview";
-
+import './Home.css'
 const Home = () => {
   const [location, setLocation] = useState("");
   const [coordinates, setCoordinates] = useState(null);
@@ -27,8 +27,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <h1>GeoFinder</h1>
-<div>
+<div className="home-container">
       <SearchBar
         setLocation={setLocation}
         results={results}
