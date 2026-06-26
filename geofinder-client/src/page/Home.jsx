@@ -28,7 +28,7 @@ const Home = () => {
     <>
       <Navbar />
       <h1>GeoFinder</h1>
-
+<div>
       <SearchBar
         setLocation={setLocation}
         results={results}
@@ -36,6 +36,7 @@ const Home = () => {
       />
 
       <Mapview coordinates={coordinates} />
+      </div>
     </>
   );
 };

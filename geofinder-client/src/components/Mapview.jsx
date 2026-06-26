@@ -16,15 +16,18 @@ const Mapview = ({ coordinates }) => {
         center={[coordinates.lat, coordinates.lng]}
         zoom={13}
         style={{ height: "100%", width: "100%" }}
+        className="map"
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer
+          attribution="&copy; OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
         <Marker position={[coordinates.lat, coordinates.lng]}>
           <Popup>
-            <strong>Location</strong>
+            Latitude: {coordinates.lat}
             <br />
-            Lat: {coordinates.lat} <br />
-            Lng: {coordinates.lng}
+            Longitude: {coordinates.lng}
           </Popup>
         </Marker>
       </MapContainer>
