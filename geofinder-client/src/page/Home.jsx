@@ -12,7 +12,7 @@ const Home = () => {
   if (!location) return;
 
   const delay = setTimeout(() => {
-    const cleanQuery = encodeURIComponent(location);
+    const cleanQuery = encodeURIComponent(location.trim());
 
     fetch(
       `https://nominatim.openstreetmap.org/search?format=json&q=${cleanQuery}&limit=5`
