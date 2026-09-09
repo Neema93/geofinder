@@ -8,21 +8,37 @@ const Home = () => {
   const [coordinates, setCoordinates] = useState(null);
   const [results, setResults] = useState([]);
 
-  useEffect(() => {
-  if (!location) return;
+    useEffect(() => {
+    if (!location.trim()) {
+      setResults([]);
+      return;
+    }
 
-  const delay = setTimeout(() => {
-    const cleanQuery = encodeURIComponent(location.trim());
+    const delay = setTimeout(async () => {
+      try {
+        setLoading(true);
 
-    fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${cleanQuery}&limit=5`
-    )
-      .then((res) => res.json())
-      .then((data) => setResults(data));
-  }, 400); // delay 400ms
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${cleanQuery}&limit=5`
+        );
 
-  return () => clearTimeout(delay);
-}, [location]);
+        if (!response.ok) {
+          throw new Error("Failed to search location");
+        }
+
+        const data = await response.json();
+        setResults(data);
+      } catch (error) {
+        console.error(error);
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(delay);
+  }, [location]);
+
 
   return (
     <>
