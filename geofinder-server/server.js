@@ -1,11 +1,20 @@
 
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const { Pool } = require("pg");
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// PostgreSQL connection
+const pool = new Pool({
+  host: process.env.DB_HOST || "127.0.0.1",
+  port: Number(process.env.DB_PORT || 5432),
+  database: process.env.DB_NAME || "geofinder",
+  user: process.env.DB_USER || "heeya",
+  password: process.env.DB_PASSWORD || undefined,
+});
 
 // Middleware
 app.use(
@@ -23,14 +32,36 @@ app.get("/", (req, res) => {
   });
 });
 
+// Database health-check route
+app.get("/db-test", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT current_database() AS database, NOW() AS server_time"
+    );
+
+    res.json({
+      message: "PostgreSQL connected successfully!",
+      database: result.rows[0].database,
+      serverTime: result.rows[0].server_time,
+    });
+  } catch (error) {
+    console.error("Database test error:", error.message);
+    res.status(500).json({
+      message: "PostgreSQL connection failed",
+    });
+  }
+});
+
 // Database connection and server startup
 async function startServer() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("MongoDB connected successfully");
+    await pool.query("SELECT 1");
+    console.log("PostgreSQL connected successfully");
 
     app.listen(PORT, () => {
-      console.log(`GeoFinder server running at http://localhost:${PORT}`);
+      console.log(
+        `GeoFinder server running at http://localhost:${PORT}`
+      );
     });
   } catch (error) {
     console.error("Startup error:", error.message);
